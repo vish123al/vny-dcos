@@ -33,7 +33,7 @@ node {
     marathon(
         url: 'http://marathon.mesos:8080',
         forceUpdate: false,
-        credentialsId: 'vnyuser',
+        credentialsId: 'dcos-token',
         filename: 'marathon.json',
         appId: 'vnyuser',
         docker: "vnyuser/vny:${gitCommit()}".toString()
