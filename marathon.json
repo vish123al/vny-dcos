@@ -5,7 +5,7 @@
   "instances": 3,
   "container": {
     "docker": {
-      "image": "vnyuser/vny:latest",
+      "image": "vishaldenge/jenkinsfile",
       "portMappings": [
         {
           "containerPort": 80,
