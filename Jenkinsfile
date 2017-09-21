@@ -24,8 +24,8 @@ node {
             usernameVariable: 'USERNAME'
         ]]
     ) {
-        sh "docker login -u '${env.DOCKERHUB_USERNAME}' -p '${env.DOCKERHUB_PASSWORD}' -e vishaldenge1@gmail.com"
-        sh "docker push vnyuser/vny:${gitCommit()}"
+        sh "docker login -u 'vishaldenge' -p 'v!sh@l123' -e 'vishaldenge1@gmail.com' "
+        sh "docker push vishaldenge/jenkinsfile:${gitCommit()}"
     }
 
     stage 'Deploy'
