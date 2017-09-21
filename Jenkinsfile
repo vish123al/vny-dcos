@@ -12,30 +12,29 @@ node {
 
     // Build Docker image
     stage 'Build'
-    sh "docker build -t vnyuser/vny:${gitCommit()} ."
+    sh "docker build -t vishaldenge/jenkinsfile:${gitCommit()} ."
 
     // Log in and push image to GitLab
     stage 'Publish'
     withCredentials(
         [[
             $class: 'UsernamePasswordMultiBinding',
-            credentialsId: 'vnyuser',
-            passwordVariable: 'DOCKERHUB_PASSWORD',
-            usernameVariable: 'DOCKERHUB_USERNAME'
+            credentialsId: 'vishaldenge',
+            passwordVariable: 'PASSWORD',
+            usernameVariable: 'USERNAME'
         ]]
     ) {
-        sh "docker login -u '${env.DOCKERHUB_USERNAME}' -p '${env.DOCKERHUB_PASSWORD}' -e demo@mesosphere.com"
+        sh "docker login -u '${env.DOCKERHUB_USERNAME}' -p '${env.DOCKERHUB_PASSWORD}' -e vishaldenge1@gmail.com"
         sh "docker push vnyuser/vny:${gitCommit()}"
     }
 
     stage 'Deploy'
 
     marathon(
-        url: 'http://marathon.mesos:8080',
+        url: 'http://10.0.1.85:8080',
         forceUpdate: true,
-        credentialsId: 'dcos-token',
         filename: 'marathon.json',
         appId: 'vnyuser',
-        docker: "vnyuser/vny:${gitCommit()}".toString()
+        docker: "vishaldenge/jenkinsfile:${gitCommit()}".toString()
     )
 }
