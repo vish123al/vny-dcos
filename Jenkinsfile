@@ -39,28 +39,35 @@ node {
     )
 }
 */
+
+def gitCommit() {
+    sh "git rev-parse HEAD > GIT_COMMIT"
+    def gitCommit = readFile('GIT_COMMIT').trim()
+    sh "rm -f GIT_COMMIT"
+    return gitCommit
+	
 node {
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
       git 'https://github.com/vish123al/vny-dcos.git'
    }
    stage('Build') {
-      sh 'docker build -t vishaldenge/bg:${BUILD_ID} .'
+      sh 'docker build -t vishaldenge/bg:${gitCommit()} .'
    }
    stage('Push') 
    {
       sh "docker login -u vishaldenge -p 'v!sh@l123' " 
-      sh 'docker push vishaldenge/bg :${BUILD_ID}'
+      sh 'docker push vishaldenge/bg:${gitCommit()}'
    }
-   stage('Prepare Scripts') 
-   {
+  // stage('Prepare Scripts') 
+  // {
      // sh 'sed -i \'s/blue/\'${BUILD_ID}\'/g\' json/bmarathon.json'
      // sh 'sed -i \'s/green/\'$((${BUILD_ID}-1))\'/g\' json/gmarathon.json'
     //  sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' deploy/updategw50.yaml'
      // sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw50.yaml'
      // sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' deploy/updategw100.yaml'
      // sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw100.yaml'
-   } 
+  // } 
   // def x = 0;
    //def y = 0;
    stage('Deploy in Cluster') 
