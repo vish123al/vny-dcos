@@ -60,44 +60,27 @@ node {
       sh "docker login -u vishaldenge -p 'v!sh@l123' " 
       sh 'docker push vishaldenge/bg'
    }
-  // stage('Prepare Scripts') 
-  // {
-     // sh 'sed -i \'s/blue/\'${BUILD_ID}\'/g\' json/bmarathon.json'
-     // sh 'sed -i \'s/green/\'$((${BUILD_ID}-1))\'/g\' json/gmarathon.json'
-    //  sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' deploy/updategw50.yaml'
-     // sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw50.yaml'
-     // sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' deploy/updategw100.yaml'
-     // sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw100.yaml'
-  // } 
-  // def x = 0;
-   //def y = 0;
    stage('Deploy in Cluster') 
    {
-	   input 'Do you approve deployment for blue?'
-       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
-	   input 'Do you approve deployment for green?'
-	   sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/gmarathon.json'
+	   def getCurrentTarget() {
+            def currentTarget = readFile 'route-target'
+           sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
+           //return currentTarget 
+	                          }
+           def getNewTarget() {
+           def currentTarget = getCurrentTarget()
+           def newTarget = ""
+               if (currentTarget == 'tasks-blue') {
+               newTarget = 'tasks-green'
+	       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/gmarathon.json'
+	                                          } 
+	       else if (currentTarget == 'tasks-green') {
+               newTarget = 'tasks-blue'
+	       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
+		                                         } 
+		   else { echo "OOPS, wrong target" }
+  return newTarget
+}
    }
-   stage('Move GW 50/50') 
-   {
-       input 'Do you approve deployment for blue?'
-       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
-	   input 'Do you approve deployment for green?'
-	   sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/gmarathon.json'
-   }
-   stage('Move Full') 
-   {
-       input 'Do you approve deployment for blue?'
-       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
-	   input 'Do you approve deployment for green?'
-	   sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/gmarathon.json'
-   }
-   stage('Undeploy Previous App') 
-   {
-       input 'Do you want to delete green old deplyment?'
-       sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@gmarathon.json'
-	   input 'Do you want to delete old blue deployment?'
-	   sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@bmarathon'
-
-	   }
+  
 }
