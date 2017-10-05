@@ -74,30 +74,30 @@ node {
    stage('Deploy in Cluster') 
    {
 	   input 'Do you approve deployment for blue?'
-       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@bmarathon.json'
+       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
 	   input 'Do you approve deployment for green?'
-	   sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@gmarathon.json'
+	   sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/gmarathon.json'
    }
    stage('Move GW 50/50') 
    {
        input 'Do you approve deployment for blue?'
-       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@bmarathon.json'
+       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
 	   input 'Do you approve deployment for green?'
-	   sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@gmarathon.json'
+	   sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/gmarathon.json'
    }
    stage('Move Full') 
    {
        input 'Do you approve deployment for blue?'
-       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@bmarathon.json'
+       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
 	   input 'Do you approve deployment for green?'
-	   sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@gmarathon.json'
+	   sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/gmarathon.json'
    }
    stage('Undeploy Previous App') 
    {
        input 'Do you want to delete green old deplyment?'
-       sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@gmarathon.json:$((${BUILD_ID}-1))'
+       sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@gmarathon.json'
 	   input 'Do you want to delete old blue deployment?'
-	   sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@bmarathon.json:$((${BUILD_ID}-1))'
+	   sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@bmarathon'
 
 	   }
 }
