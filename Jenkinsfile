@@ -62,12 +62,12 @@ node {
    }
    stage('Deploy in Cluster') 
    {
-	   def getCurrentTarget() {
-            def currentTarget = readFile 'route-target'
-           sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
+def getCurrentTarget() {
+def currentTarget = readFile 'route-target'
+sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
            //return currentTarget 
-	                          }
-           def getNewTarget() {
+  }
+def getNewTarget() {
            def currentTarget = getCurrentTarget()
            def newTarget = ""
                if (currentTarget == 'tasks-blue') {
