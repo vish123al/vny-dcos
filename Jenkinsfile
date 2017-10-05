@@ -45,6 +45,7 @@ def gitCommit() {
     def gitCommit = readFile('GIT_COMMIT').trim()
     sh "rm -f GIT_COMMIT"
     return gitCommit
+}
 	
 node {
    stage('Preparation') { // for display purposes
