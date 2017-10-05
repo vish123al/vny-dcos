@@ -49,7 +49,7 @@ node {
    }
    stage('Push') 
    {
-      sh 'docker login -u vishaldenge -p 'v!sh@l123' 
+      sh "docker login -u vishaldenge -p 'v!sh@l123' " 
       sh 'docker push vishaldenge/bg :${BUILD_ID}'
    }
    stage('Prepare Scripts') 
