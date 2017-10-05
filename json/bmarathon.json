@@ -5,7 +5,7 @@
   "instances": 3,
   "container": {
     "docker": {
-      "image": "vishaldenge/jenkinsfile",
+      "image": "vishaldenge/bg",
       "portMappings": [
         {
           "containerPort": 80,
