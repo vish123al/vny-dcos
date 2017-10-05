@@ -53,12 +53,12 @@ node {
       git 'https://github.com/vish123al/vny-dcos.git'
    }
    stage('Build') {
-      sh 'docker build -t vishaldenge/bg:${gitCommit()} .'
+      sh 'docker build -t vishaldenge/bg .'
    }
    stage('Push') 
    {
       sh "docker login -u vishaldenge -p 'v!sh@l123' " 
-      sh 'docker push vishaldenge/bg:${gitCommit()}'
+      sh 'docker push vishaldenge/bg'
    }
   // stage('Prepare Scripts') 
   // {
