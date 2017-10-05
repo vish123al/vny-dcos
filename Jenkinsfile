@@ -60,6 +60,14 @@ node {
       sh "docker login -u vishaldenge -p 'v!sh@l123' " 
       sh 'docker push vishaldenge/bg'
    }
+	stage('deploy') 
+   {
+      sh "oc project tasks-prod"
+
+  // Extract the route target (tasks-green or tasks-blue)
+  // This will be used by getCurrentTarget and getNewTarget methods
+  sh "oc get route tasks -n tasks-prod -o template --template='{{ .spec.to.name }}' > route-target"
+   }
 }
    
 def getCurrentTarget() {
