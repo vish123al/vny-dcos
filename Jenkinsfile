@@ -60,7 +60,7 @@ node {
       sh "docker login -u vishaldenge -p 'v!sh@l123' " 
       sh 'docker push vishaldenge/bg'
    }
-   stage('Deploy in Cluster') 
+}
    
 def getCurrentTarget() {
 def currentTarget = readFile 'route-target'
@@ -83,4 +83,4 @@ def getNewTarget() {
 }
    
   
-}
+
