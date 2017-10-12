@@ -1,11 +1,11 @@
 {
-  "id": "/green",
+  "id": "/blue:IDPRETAG",
   "cpus": 1,
   "mem": 128,
   "instances": 3,
   "container": {
     "docker": {
-      "image": "vishaldenge/bg",
+      "image": "vishaldenge/bgapp:IDPREDAG",
       "portMappings": [
         {
           "containerPort": 80,
