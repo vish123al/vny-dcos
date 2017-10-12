@@ -11,13 +11,7 @@ node {
       sh "docker login -u vishaldenge -p 'v!sh@l123' " 
       sh 'docker push vishaldenge/bgapp:${BUILD_ID}'
    }
-   stage('Prepare Scripts') 
-   {
-      sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' json/bmarathon.json'
-      sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' json/bmarathon.json'
-      sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' json/gmarathon.json'
-      sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' json/gmarathon.json'
-   } 
+  
    stage('Move GW 50/50') 
    {
        input 'Do you approve deployment?'
