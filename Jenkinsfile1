@@ -30,7 +30,7 @@ node {
    }
    stage('Undeploy Previous App') 
    {
-	   sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps:$((${BUILD_ID}-1))'
+	   sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
 
    }
 }
