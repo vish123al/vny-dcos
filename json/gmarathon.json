@@ -1,5 +1,5 @@
 {
-  "id": "/test/green",
+  "id": "green",
   "cpus": 1,
   "mem": 128,
   "instances": 1,
