@@ -1,5 +1,5 @@
 {
-  "id": "/test/blue:IDPRETAG",
+  "id": "/test/blue",
   "cpus": 1,
   "mem": 128,
   "instances": 1,
