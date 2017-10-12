@@ -2,7 +2,7 @@
   "id": "/test/blue:IDTAG",
   "cpus": 1,
   "mem": 128,
-  "instances": 3,
+  "instances": 1,
   "container": {
     "docker": {
       "image": "vishaldenge/bgapp:IDTAG",
