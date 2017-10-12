@@ -1,0 +1,36 @@
+node {
+   stage('Preparation') { // for display purposes
+      // Get some code from a GitHub repository
+      git 'https://github.com/vish123al/vny-dcos.git'
+   }
+   stage('Build') {
+      sh 'docker build -t vishaldenge/bgapp:${BUILD_ID} .'
+   }
+   stage('Push') 
+   {
+      sh "docker login -u vishaldenge -p 'v!sh@l123' " 
+      sh 'docker push vishaldenge/bgapp:${BUILD_ID}'
+   }
+   stage('Prepare Scripts') 
+   {
+      sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' json/bmarathon.json'
+      sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' json/bmarathon.json'
+      sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' json/gmarathon.json'
+      sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' json/gmarathon'
+   } 
+   stage('Move GW 50/50') 
+   {
+       input 'Do you approve deployment?'
+       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
+   }
+   stage('Move Full') 
+   {
+       input 'Do you approve deployment?'
+       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/gmarathon.json'
+   }
+   stage('Undeploy Previous App') 
+   {
+	   sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/groups/test:$((${BUILD_ID}-1))'
+
+   }
+}
