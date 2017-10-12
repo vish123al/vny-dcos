@@ -5,7 +5,7 @@
   "instances": 1,
   "container": {
     "docker": {
-      "image": "vishaldenge/bgapp:IDTAG",
+      "image": "vishaldenge/bgapp",
       "portMappings": [
         {
           "containerPort": 80,
