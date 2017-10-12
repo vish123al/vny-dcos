@@ -4,12 +4,12 @@ node {
       git 'https://github.com/vish123al/vny-dcos.git'
    }
    stage('Build') {
-      sh 'docker build -t vishaldenge/bgapp:${BUILD_ID} .'
+      sh 'docker build -t vishaldenge/bgapp .'
    }
    stage('Push') 
    {
       sh "docker login -u vishaldenge -p 'v!sh@l123' " 
-      sh 'docker push vishaldenge/bgapp:${BUILD_ID}'
+      sh 'docker push vishaldenge/bgapp'
    }
   
    stage('Move GW 50/50') 
