@@ -15,16 +15,16 @@ node {
    stage('Move GW 50/50') 
    {
        input 'Do you approve deployment?'
-       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/bmarathon.json'
+       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.226:8080/v2/apps -d@json/bmarathon.json'
    }
    stage('Move Full') 
    {
        input 'Do you approve deployment?'
-       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps -d@json/gmarathon.json'
+       sh 'curl -X POST -H "Content-Type: application/json" http://10.0.1.226:8080/v2/apps -d@json/gmarathon.json'
    }
    stage('Undeploy Previous App') 
    {
-	   sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.85:8080/v2/apps/blue'
+	   sh 'curl -X DELETE -H "Content-Type: application/json" http://10.0.1.226:8080/v2/apps/blue'
 
    }
 }
